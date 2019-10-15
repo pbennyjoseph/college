@@ -1,0 +1,23 @@
+Enter Number of rows and columns: Enter 5 rows and 5 columns
+Original Matrix is 
+0 1 0 0 0 
+0 0 0 0 3 
+2 0 0 0 0 
+0 0 0 0 0 
+0 0 5 0 0 
+
+
+Transpose Matrix is 
+0 0 2 0 0 
+1 0 0 0 0 
+0 0 0 0 5 
+0 0 0 0 0 
+0 3 0 0 0 
+
+
+Double of Matrix is 
+0 2 0 0 0 
+0 0 0 0 6 
+4 0 0 0 0 
+0 0 0 0 0 
+0 0 5 0 0 

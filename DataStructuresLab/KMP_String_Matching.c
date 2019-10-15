@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <math.h>
 
+
+// KMP algorithm implementation
 void kmpmatches(char * haystack,int haystack_sz,char * needle, int needle_sz)
 {
     int pi[needle_sz], count = 0;

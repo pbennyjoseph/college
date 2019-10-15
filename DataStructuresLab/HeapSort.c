@@ -46,25 +46,34 @@ void displayArray(int *arr, int n)
     printf("\n");
 }
 
+// fix heap property from root to all children till endindex.
 void heapify(int *arr, int root, int endindex)
 {
     int maximum = root;
     int left = 2 * root + 1;
     int right = 2 * root + 2;
 
+    // check if left index is in range and
+    // if leftchild is greater than root.
     if (left < endindex && arr[left] > arr[maximum])
     {
         maximum = left;
     }
 
+    // check if right index is in range and
+    // if rightchild is greater than root.
     if (right < endindex && arr[right] > arr[maximum])
     {
         maximum = right;
     }
 
+    // fix heap property by replacing root with maximum
+    // of the two children
     if (maximum != root)
     {
         swap(arr + maximum, arr + root);
+
+        // Now fix heap property in the maximum subtree
         heapify(arr, maximum, endindex);
     }
 }
@@ -72,13 +81,21 @@ void heapify(int *arr, int root, int endindex)
 void heapSort(int *arr, int n)
 {
     int i, j;
+    // Build a max-heap
     for (i = n / 2 - 1; i >= 0; --i)
     {
         heapify(arr, i, n);
     }
+
+    // Extract top element and insert at the end.
+    // Now that end element is inplace, --j.
+    // fix heap property after removing the max element.
     for (j = n - 1; j >= 0; --j)
     {
         swap(arr, arr + j);
+
+        // jth element is sorted.
+        // fix heap property till j-1
         heapify(arr, 0, j);
     }
 }
