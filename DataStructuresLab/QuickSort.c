@@ -3,7 +3,6 @@
 #include <math.h>
 
 void displayArray(int *, int);
-// void quickSort(int *arr, );
 void swap(int *, int *);
 
 void recursiveQS(int *, int, int);
