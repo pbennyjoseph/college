@@ -5,7 +5,7 @@
 void heapSort(int *, int);
 void heapify(int *, int, int);
 void displayArray(int *, int);
-void sway(int *, int *);
+void swap(int *, int *);
 
 int main()
 {

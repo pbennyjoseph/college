@@ -15,19 +15,26 @@ void PrintSPM(TERM *);
 int main()
 {
     int M, N, i, j;
-    printf("Enter Number of rows and columns: ");
+    // printf("Enter Number of rows and columns: ");
     scanf("%d %d", &M, &N);
+
     TERM *arr = (TERM *)malloc(sizeof(TERM) * M * N);
     arr[0].row = M;
     arr[0].col = N;
+
+    // Read matrix and store only non-zero values
     ReadInto(arr);
     TERM *atr = (TERM *)malloc(sizeof(TERM) * (arr[0].val + 1));
+
     printf("Original Matrix is \n");
     PrintSPM(arr);
+
     printf("Transpose Matrix is \n");
     TransposeSPM(arr);
+
     printf("Double of Matrix is \n");
     AddSPM(arr, arr);
+
     free(arr);
     return 0;
 }
@@ -53,6 +60,7 @@ void ReadInto(TERM *x)
     x[0].val = nz - 1;
 }
 
+// Adds two Matrices a,b and returns a new SparseMatrix
 TERM *AddSPM(TERM *a, TERM *b)
 {
     int i = 1, j = 1, k = 1;
@@ -61,44 +69,45 @@ TERM *AddSPM(TERM *a, TERM *b)
         printf("Cannot Add these Matrices\n");
         return NULL;
     }
-    TERM *c = (TERM *)malloc(sizeof(TERM) * (a[0].val + b[0].val));
+    TERM *result = (TERM *)malloc(sizeof(TERM) * (a[0].val + b[0].val));
 
-    c[0] = a[0];
+    result[0] = a[0];
     while (i <= a[0].val || j <= b[0].val)
     {
-        if (i == a[0].val)
+        if (i == a[0].val) // first matrix is empty.
         {
-            while (j <= b[0].val)
-                c[k++] = b[j++];
+            while (j <= b[0].val) // Put all elements of second matrix into result.
+                result[k++] = b[j++];
         }
-        if (j == b[0].val)
+        if (j == b[0].val) // Second matrix is empty.
         {
-            while (i <= a[0].val)
-                c[k++] = a[i++];
+            while (i <= a[0].val) // Put all elements of second matrix into result.
+                result[k++] = a[i++];
         }
+
         if (a[i].row < b[j].row)
-            c[k++] = a[i++];
+            result[k++] = a[i++];
         else if (a[i].row == b[j].row)
         {
             if (a[i].col < b[j].col)
-                c[k++] = a[i++];
+                result[k++] = a[i++];
             else if (a[i].col > b[j].col)
-                c[k++] = b[j++];
+                result[k++] = b[j++];
             else
             {
-                c[k] = a[i];
-                c[k++].val = a[i++].val + b[j++].val;
+                result[k] = a[i];
+                result[k++].val = a[i++].val + b[j++].val;
             }
         }
         else
-            c[k++] = b[j++];
+            result[k++] = b[j++];
     }
-    c[0].val = k;
+    result[0].val = k;
 
-    PrintSPM(c);
+    PrintSPM(result);
 
-    free(c);
-    // return c; // optional. Disable above line.
+    free(result);
+    // return c; // optional. comment above line.
 }
 
 TERM *TransposeSPM(TERM *a)
@@ -123,7 +132,9 @@ TERM *TransposeSPM(TERM *a)
     {
         row_arr[a[i].col]++;
     }
+
     startpos[0] = 1;
+
     for (i = 1; i < cols; i++)
     {
         startpos[i] = startpos[i - 1] + row_arr[i - 1];
@@ -136,15 +147,16 @@ TERM *TransposeSPM(TERM *a)
         a_tr[startpos[a[i].col]].col = a[i].row;
         startpos[a[i].col]++;
     }
+    
     PrintSPM(a_tr);
     free(a_tr);
-    //return a_tr; // Optional. Disable above line
+    //return a_tr; // Optional. comment above line
 }
 
 void PrintSPM(TERM *a)
 {
     int i, j, k = 1;
-    
+
     // Code to print the terms
     // for(i=1;i<=a[0].val;i++)
     //     printf("%d %d %d\n",a[i].row,a[i].col,a[i].val);
