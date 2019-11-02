@@ -47,29 +47,28 @@ void swap(int *a, int *b)
     *b = temp;
 }
 
+int partition(int * arr, int lo,int hi){
+	int i = lo;
+	int j = hi+1;
+	int v = arr[lo];
+	while(1){
+		while(arr[++i] < v)
+			if(i==hi) break;
+		while(v < arr[--j])
+			if(j==lo) break;
+		if(i>=j) break;
+		swap(arr+i,arr+j);
+	}
+	swap(arr+lo,arr+j);
+	return j;
+}
+
 // QuickSort algorithm implementation.
 void recursiveQS(int *arr, int left, int right)
 {
-    int i, j, pivot = arr[left];
-    if (left < right)
-    {
-        i = left + 1;
-        j = right;
-        do
-        {
-            while (i<=j && arr[i] < pivot )
-                ++i;
-            while (i <= j && arr[j] > pivot )
-                --j;
-            if (i < j)
-            {
-                swap(arr + i, arr + j);
-            }
-        } while (i < j);
-
-        swap(arr + left, arr + j);
-
-        recursiveQS(arr, left, i-1);
-        recursiveQS(arr, i+1, right);
-    }
+    int i, j;
+	if(right <= left) return;
+	i = partition(arr,left,right);
+	recursiveQS(arr, left, i-1);
+	recursiveQS(arr, i+1, right);
 }
