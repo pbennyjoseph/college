@@ -1,0 +1,58 @@
+<head>
+    <!-- style copied from w3 -->
+    <style>
+        #mytable {
+          font-family: Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        #mytable td, #mytable th {
+          border: 1px solid #ddd;
+          padding: 8px;
+        }
+        
+        #mytable tr:nth-child(even){background-color: #f2f2f2;}
+        
+        #mytable tr:hover {background-color: #ddd;}
+        
+        #mytable th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: left;
+          background-color: #4CAF50;
+          color: white;
+        }
+    </style>
+    <script lang="javascript">
+        async function getDataFromAPI() {
+            let key_strings = ["id", "employee_name", "employee_salary", "employee_age"];
+            let url = "http://dummy.restapiexample.com/api/v1/employees";
+            let response = await fetch(url);
+            let json_employees = await response.json();
+
+            // populate html
+            var elem = document.getElementById("mytable");
+            for(let employee of json_employees.data){
+                var row = document.createElement("tr");
+                for(let key_string of key_strings){
+                    var datum = document.createElement("td");
+                    datum.innerHTML = employee[key_string];
+                    row.appendChild(datum);
+                }
+                elem.appendChild(row);
+            }
+        }
+        getDataFromAPI();
+    </script>
+</head>
+<body>
+    <table id="mytable">
+        <tr>
+            <th>ID</th>
+            <th>Employee Name</th>
+            <th>Salary</th>
+            <th>Age</th>
+        </tr>
+    </table>
+</body>
